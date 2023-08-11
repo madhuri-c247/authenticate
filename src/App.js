@@ -6,18 +6,26 @@ import Hobbies from './components/Hobbies';
 import Education from './components/Education';
 import Login from './components/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Auth from './components/Auth';
+import Signup from './components/Signup';
+import Error from './components/Error';
+import ResponsiveDialog from './components/dialog';
 
 function App() {
   
   return (
     <BrowserRouter>
      <Routes>
-       <Route exact path='/' element={<Login/>}/>
-       <Route exact path='/home' element={<Home/>}>
-        <Route exact path='/home/about' element={<About/>}/>
-        <Route exact path='/home/education' element={<Education/>}/>
-        <Route exact path='/home/hobbies' element={<Hobbies/>}/>
+        <Route exact path='/' element={<Auth><Home/></Auth>}/>
+       <Route exact path='/home' element= {<Home/>}>
+            <Route exact path='/home/dialog' element={<ResponsiveDialog/>}/>
+            <Route exact path='/home/about' element={<About/>}/>
+            <Route exact path='/home/education' element={<Education/>}/>
+            <Route exact path='/home/hobbies' element={<Hobbies/>}/>
        </Route>
+       <Route exact path='/login' element={<Login/>}/>
+       <Route exact path='/signup' element={<Signup/>}/>
+       <Route exact path='*' element={<Error/>}/>    
      </Routes>
     </BrowserRouter>
   );

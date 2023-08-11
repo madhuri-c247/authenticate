@@ -52,13 +52,13 @@ function Header() {
     <div className="carousel">
       <div style={{ textAlign: "center" }}>
         <div style={{
-          padding: "0 20px"
+          padding: "0 10px"
         }}>
           <Carousel
             data={data}
             time={2000}
             width="100%"
-            height="300px"
+            height="370px"
             captionStyle={captionStyle}
             radius="10px"
             slideNumber={true}
