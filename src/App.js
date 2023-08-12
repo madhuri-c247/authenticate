@@ -16,17 +16,17 @@ function App() {
   return (
     <BrowserRouter>
      <Routes>
-        <Route exact path='/' element={<Auth><Home/></Auth>}/>
-       <Route exact path='/home' element= {<Home/>}>
+      <Route exact path='/' element={<Auth><Home/></Auth>}/>
+      <Route exact path='/home' element= {<Home/>}>
             <Route exact path='/home/dialog' element={<ResponsiveDialog/>}/>
             <Route exact path='/home/about' element={<About/>}/>
             <Route exact path='/home/education' element={<Education/>}/>
             <Route exact path='/home/hobbies' element={<Hobbies/>}/>
-       </Route>
+      </Route>
        <Route exact path='/login' element={<Login/>}/>
        <Route exact path='/signup' element={<Signup/>}/>
-       <Route exact path='*' element={<Error/>}/>    
-     </Routes>
+       <Route exact path='*' element={<Error/>}/>     
+    </Routes>
     </BrowserRouter>
   );
 }

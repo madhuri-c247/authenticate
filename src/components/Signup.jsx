@@ -11,7 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -27,14 +27,41 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
+
 export default function Signup() {
+  const navigate = useNavigate();
+
+  const [isChecked , setIsChecked] = React.useState(false)
+  const [userData, setUserData] = React.useState({
+    firstName:'',
+    lastName:'',
+    email:'',
+    password:'',
+  
+  })
+
+  const handleChange = (e)=>{
+      const {name, value} = e.target;
+      setUserData({
+        ...userData,
+        [name]:value
+
+      })
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    if(userData.firstName==="" || userData.lastName==="" || userData.email==="" || userData.password==="" ){
+      alert('fill the details')
+    }else if(!isChecked){
+      alert('please check')
+    }
+    else{
+      localStorage.setItem('users', JSON.stringify(userData))
+      console.log(userData)
+      navigate('/login')
+    }
   };
 
   return (
@@ -66,6 +93,8 @@ export default function Signup() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  value={userData.firstName}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -76,6 +105,8 @@ export default function Signup() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  value={userData.lastName}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -86,6 +117,8 @@ export default function Signup() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={userData.email}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -97,12 +130,14 @@ export default function Signup() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={userData.password}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  control={<Checkbox value="allowExtraEmails" color="primary" checked={isChecked} onChange={(e)=>setIsChecked(e.target.checked)}/>}
+                  label="I accept that the given details are valid" 
                 />
               </Grid>
             </Grid>

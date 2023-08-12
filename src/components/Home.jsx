@@ -16,8 +16,9 @@ import Profile from './profile';
 
 const Home = () => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
+    const [user, setUser] = React.useState([])
     const [open, setOpen] = React.useState(false);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -36,6 +37,10 @@ const Home = () => {
 
     };
 
+    useEffect(()=>{
+        const data = localStorage.getItem('user');
+        setUser(data)
+    })
 
     return (
         <div>
