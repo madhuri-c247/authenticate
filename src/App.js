@@ -10,6 +10,7 @@ import Auth from './components/Auth';
 import Signup from './components/Signup';
 import Error from './components/Error';
 import ResponsiveDialog from './components/dialog';
+import MyProfile from './components/MyProfile';
 
 function App() {
   
@@ -23,6 +24,7 @@ function App() {
             <Route exact path='/home/education' element={<Education/>}/>
             <Route exact path='/home/hobbies' element={<Hobbies/>}/>
       </Route>
+      <Route exact path='/myprofile' element={<MyProfile/>}/>
        <Route exact path='/login' element={<Login/>}/>
        <Route exact path='/signup' element={<Signup/>}/>
        <Route exact path='*' element={<Error/>}/>     

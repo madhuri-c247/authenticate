@@ -5,8 +5,13 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Typography } from '@mui/material';
+import AlertComponent from './Alerts';
 
 function Login() {
+
+  const [severity, setSeverity] = React.useState('')
+  const [alertMessage, setAlertMessage] = React.useState('')
+  const [alert, setAlert] = React.useState(false)
   const [data, setdata] = useState([])
   const [userData, setUser] = useState({
     email: '',
@@ -18,22 +23,48 @@ function Login() {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('users'))
-    setdata(user)
-    console.log(data)
+    setdata(user);
+    console.log(data,'data')
 
   },[])
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if(data){
 
-    if (userData.email === data.email && userData.password === data.password) {
-      console.log('sucessfull')
-      navigate('/home')
-    } else {
-      console.log('not success')
+      const tempData = data.find((item)=> item.password === userData.password && item.email === userData.email)
+      if(tempData){
+        
+      
+      if (userData.email === tempData.email && userData.password === tempData.password) {
+        console.log('sucessfull');
+        localStorage.setItem('token', JSON.stringify(tempData))
+        navigate('/home');
+      } else {
+        setAlert(true)
+        setSeverity('error')
+        setAlertMessage('Fill the proper details!')
+      }
+    }else{
+      setAlert(true)
+      setAlertMessage(`User Don't Exist!`)
+      setSeverity('error')
+    }
+  }else{
+    setAlert(true)
+    setAlertMessage(`No User Found!`)
+    setSeverity('error')
+      
     }
   }
 
+  
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlert(false);
+  };
     const handleChange = (e) => {
       const { value, name } = e.target;
       setUser({
@@ -69,6 +100,9 @@ function Login() {
             </Form>
           </MDBCol>
         </MDBRow>
+        {alert?
+      <AlertComponent alertMessage={alertMessage} open={alert} handleClose={handleClose} severity={severity} />
+    :''}
       </MDBContainer>
     );
   }

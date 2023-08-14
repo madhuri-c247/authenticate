@@ -5,7 +5,7 @@ const Auth = (props) => {
     const navigate = useNavigate()
     //  localStorage.setItem('data', 'madhuri')
     useEffect(() => {
-        if (!localStorage.getItem('data')) {
+        if (!localStorage.getItem('token')) {
             navigate('/login')
             console.log('not authenticate')
         }

@@ -14,10 +14,17 @@ const Grid = styled(MuiGrid)(({ theme }) => ({
 }));
 
 export default function About() {
+
+  const [user, setUser] = React.useState([])
+
+  React.useEffect(()=>{
+    const token = JSON.parse(localStorage.getItem('token'))
+    setUser(token)
+  },[])
   const content = (
     <div className='m-4'>
       <Typography className='mb-3' variant='h2' component="h1">Hey!</Typography>
-      <Typography variant='h4'>I'm Madhuri Verma.</Typography>
+      <Typography variant='h4'>I'm {user.firstName} {user.lastName}.</Typography>
       <Typography className='mt-5' variant='body1'>Lorem ipsum dolor sit amet
        consectetur adipisicing elit. Quos dignissimos magni cupiditate 
        sapiente nesciunt explicabo ut reprehenderit aspernatur ducimus officia, 

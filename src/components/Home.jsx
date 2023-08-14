@@ -17,6 +17,8 @@ import Profile from './profile';
 const Home = () => {
 
     const navigate = useNavigate();
+    const location = useLocation()
+    const data = location.state 
 
     const [user, setUser] = React.useState([])
     const [open, setOpen] = React.useState(false);
@@ -29,6 +31,7 @@ const Home = () => {
 
     const handleCloseAgree = () => {
         setOpen(false);
+        localStorage.removeItem('token')
         navigate('/login')
     };
 
@@ -38,14 +41,17 @@ const Home = () => {
     };
 
     useEffect(()=>{
-        const data = localStorage.getItem('user');
-        setUser(data)
-    })
+    //   console.log(data, 'dataa')
+    //   const token = JSON.parse(localStorage.getItem('token'))
+    //   setUser(token)
+
+
+    },[])
 
     return (
         <div>
             <div className='navbar-home m-1 p-2'>
-            <Profile/>
+            <Profile />
             <Button variant="contained" onClick={handleClickOpen}>
                 LogOut
             </Button>

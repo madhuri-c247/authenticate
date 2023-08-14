@@ -12,6 +12,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { NavLink, useNavigate } from 'react-router-dom';
+import AlertComponent from './Alerts';
+import { dark } from '@mui/material/styles/createPalette';
+import { Alert } from 'bootstrap';
+
 
 function Copyright(props) {
   return (
@@ -30,7 +34,10 @@ const defaultTheme = createTheme();
 
 export default function Signup() {
   const navigate = useNavigate();
-
+  const [alertMessage, setAlertMessage] = React.useState('')
+  const [severity, setSeverity] = React.useState('')
+  const [alert, setAlert] = React.useState(false)
+  const [storedData, setStoredData] = React.useState([])
   const [isChecked , setIsChecked] = React.useState(false)
   const [userData, setUserData] = React.useState({
     firstName:'',
@@ -39,6 +46,27 @@ export default function Signup() {
     password:'',
   
   })
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlert(false);
+  };
+
+  // setInterval(()=>{
+  //  handleClose()
+  // },5000)
+  
+  React.useEffect(()=>{
+    const data = JSON.parse(localStorage.getItem('users'));
+    
+    
+    if(data){
+      setStoredData(data)
+
+    }
+  },[])
 
   const handleChange = (e)=>{
       const {name, value} = e.target;
@@ -49,17 +77,26 @@ export default function Signup() {
       })
   }
 
+ 
+    
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if(userData.firstName==="" || userData.lastName==="" || userData.email==="" || userData.password==="" ){
-      alert('fill the details')
+      setAlert(true)
+      setAlertMessage('fill the details!')
+      setSeverity('error')
+      
     }else if(!isChecked){
-      alert('please check')
+      setAlert(true)
+      setAlertMessage('Please Check the condition!')
+      setSeverity('error')
     }
     else{
-      localStorage.setItem('users', JSON.stringify(userData))
-      console.log(userData)
+      const updatedData  = [...storedData, userData]
+      localStorage.setItem('users', JSON.stringify(updatedData));
+      setAlert(true)
+      setAlertMessage('success')
       navigate('/login')
     }
   };
@@ -160,6 +197,9 @@ export default function Signup() {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
+{alert?
+      <AlertComponent alertMessage={alertMessage} open={alert} handleClose={handleClose} severity={severity}/>
+    :''}
     </ThemeProvider>
   );
 }

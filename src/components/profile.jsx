@@ -3,6 +3,8 @@ import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
+import { Navigate, useNavigate } from 'react-router-dom';
+import profile from '../components/assests/profile.jpg'
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -40,14 +42,20 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 }));
 
 export default function Profile() {
+
+  const navigate  = useNavigate();
+
+  const profilebtn = () =>{
+
+  }
   return (
-    <Stack direction="row" spacing={2}>
+    <Stack className='profile' direction="row" spacing={2} onClick={profilebtn}>
       <StyledBadge
         overlap="circular"
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         variant="dot"
       >
-        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        <Avatar alt="Remy Sharp" src={profile}/>
       </StyledBadge>
       
     </Stack>
