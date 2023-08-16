@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { MDBContainer, MDBCol, MDBRow, MDBTypography } from 'mdb-react-ui-kit';
 import image from './assests/loginimage.webp'
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -7,7 +7,11 @@ import Form from 'react-bootstrap/Form';
 import { Typography } from '@mui/material';
 import AlertComponent from './Alerts';
 
+import { myContext } from '../App';
+
 function Login() {
+
+  const {loginUser, setLoginUser} = useContext(myContext)
 
   const [severity, setSeverity] = React.useState('')
   const [alertMessage, setAlertMessage] = React.useState('')
@@ -20,10 +24,10 @@ function Login() {
 
    const navigate = useNavigate();
 
-
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('users'))
+    const user = JSON.parse(localStorage.getItem('users'));
     setdata(user);
+    setLoginUser(user);
     console.log(data,'data')
 
   },[])
@@ -40,6 +44,7 @@ function Login() {
         console.log('sucessfull');
         localStorage.setItem('token', JSON.stringify(tempData))
         navigate('/home');
+        console.log(loginUser,'login user')
       } else {
         setAlert(true)
         setSeverity('error')
