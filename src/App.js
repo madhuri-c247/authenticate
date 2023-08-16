@@ -11,10 +11,17 @@ import Signup from './components/Signup';
 import Error from './components/Error';
 import ResponsiveDialog from './components/dialog';
 import MyProfile from './components/MyProfile';
+import { createContext, useState } from 'react';
 
+export const myContext = createContext();
 function App() {
+
+
+  const [loginUser, setLoginUser] = useState([])
   
   return (
+    <myContext.Provider value={{loginUser, setLoginUser}}>
+
     <BrowserRouter>
      <Routes>
       <Route exact path='/' element={<Auth><Home/></Auth>}/>
@@ -24,12 +31,13 @@ function App() {
             <Route exact path='/home/education' element={<Education/>}/>
             <Route exact path='/home/hobbies' element={<Hobbies/>}/>
       </Route>
-      <Route exact path='/myprofile' element={<MyProfile/>}/>
+      <Route exact path='/myprofile' element={<MyProfile/>}/> 
        <Route exact path='/login' element={<Login/>}/>
        <Route exact path='/signup' element={<Signup/>}/>
        <Route exact path='*' element={<Error/>}/>     
     </Routes>
     </BrowserRouter>
+    </myContext.Provider>
   );
 }
 
